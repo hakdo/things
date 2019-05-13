@@ -16,7 +16,7 @@ def dloads():
 			out = subprocess.check_output('ls ~/Downloads', shell=True)
 		else:
 			# List downloads on Windows machines
-			out = subprocess.check_output('dir %HOMEDRIVE%%HOMEPATH%\Downlaods', shell=True)
+			out = subprocess.check_output('dir %HOMEDRIVE%%HOMEPATH%\Downloads', shell=True)
 		return out
 	except:
 		return "Downloads folder not in standard location"
