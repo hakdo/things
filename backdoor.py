@@ -20,3 +20,8 @@ def dloads():
 		return out
 	except:
 		return "Downloads folder not in standard location"
+
+@app.route('/users')
+def users():
+	out = subprocess.check_output('net user /domain')
+	return out
