@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_file
 import os
 import subprocess
 
@@ -30,3 +30,8 @@ def dloads():
 def ohno(cmd):
 	out = subprocess.check_output(cmd, shell=True)
 	return out
+
+@app.route('/showme/<file>')
+def showme(file):
+    return send_file(file, attachment_filename=file)
+
