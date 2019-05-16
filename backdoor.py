@@ -53,12 +53,16 @@ def listfiles(path=''):
 		os.chdir('..')
 	else:
 		os.chdir(curdir + os.sep + path)
+	try:
+		with os.scandir() as it:
+			for entry in it:
+				if entry.is_file():
+					flist.append(entry)
+				else:
+					dirlist.append(entry)
+		return render_template('listfiles.html', flist=flist, dirlist=dirlist, curdir=os.getcwd())
+	except:
+		abort(404)
+
 	
-	with os.scandir() as it:
-		for entry in it:
-			if entry.is_file():
-				flist.append(entry)
-			else:
-				dirlist.append(entry)
-	return render_template('listfiles.html', flist=flist, dirlist=dirlist, curdir=os.getcwd())
 
