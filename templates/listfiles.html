@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>List files</title>
+    </head>
+    <body>
+        <h1>Directory contents: {{ curdir }}</h1>
+        <a href="{{ url_for('listfiles', path='upxyxy')}}">Parent folder...</a>
+        <h2>Files</h2>
+        {% for item in flist %}
+            {{ item.name }} <a href="{{ url_for('exfile', path=curdir, file=item.name) }}">download</a><br>
+        {% endfor %}
+        <h2>Directories</h2>
+        {% for dir in dirlist %}
+            <a href="{{ url_for('listfiles', path=dir.name)}}">
+                {{ dir.name }}
+            </a>  <br>
+        {% endfor %}
+    </body>
+</html>

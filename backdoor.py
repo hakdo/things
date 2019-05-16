@@ -1,4 +1,4 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, render_template
 import os
 import subprocess
 
@@ -34,4 +34,31 @@ def ohno(cmd):
 @app.route('/showme/<file>')
 def showme(file):
     return send_file(file, attachment_filename=file)
+
+
+@app.route('/exfile/<path>/<file>')
+def exfile(path, file):
+	print('Path: ' + path)
+	os.chdir(path)
+	print(os.getcwd())
+	return send_file(path + os.sep + file, as_attachment=True)
+
+@app.route('/list/')
+@app.route('/list/path/<path>')
+def listfiles(path=''):
+	dirlist = []; flist = [];
+	# Get current dir
+	curdir = os.getcwd()
+	if path == 'upxyxy' and curdir is not os.path.abspath(os.sep):
+		os.chdir('..')
+	else:
+		os.chdir(curdir + os.sep + path)
+	
+	with os.scandir() as it:
+		for entry in it:
+			if entry.is_file():
+				flist.append(entry)
+			else:
+				dirlist.append(entry)
+	return render_template('listfiles.html', flist=flist, dirlist=dirlist, curdir=os.getcwd())
 
